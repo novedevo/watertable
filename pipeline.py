@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Iterator, List, Tuple
+import numpy as np
 
 def clean_and_process(stamp: str, value: str, code: str):
     try:
@@ -31,3 +32,6 @@ def unify_year(dates: List[Tuple[datetime, float]], year:int=2021):
         unified_dates.append((date[0].replace(year=year), date[1]))
         # print(date[0].year)
     return unified_dates
+
+def rolling_mean(x, N):
+    return np.convolve(x, np.ones((N,))/N)[(N-1):]
