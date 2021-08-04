@@ -12,7 +12,7 @@ def clean_and_process(stamp: str, value: str, code: str):
     depth = float(value)
     if depth > 11:
         return False
-    date = datetime.fromisoformat(stamp + '-07:00')
+    date = datetime.fromisoformat(stamp)
     return (
         date,
         -depth
