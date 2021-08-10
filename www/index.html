@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watertable</title>
+    <link rel='stylesheet' href='style.css'>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
+        </style> 
+</head>
+<body>
+    <h1>North Pender Island Water Table</h1>
+    <div class="summary">
+        <p class="left-col">The water level is currently</p>
+        <p id="water-level" class="dyn-important">XX</p>
+        <p class="right-col">feet below the surface.</p>
+        <p class="left-col">Ordinarily, in <span class="rough-time">this time of year</span>, it's about</p>
+        <p id="historical-water-level" class="dyn-important">XX</p>
+        <p class="right-col">feet below the surface.</p>
+    </div>
+    <div class="graph-wrapper">
+        <img src="placeholder" alt="A graph showing the water level for this year, and 10 years in the past">
+        <p style="display:none">Time range: 2010 - 2021<br>
+            Smoothing: 48 hours<br>
+            AI prediction: no<br>
+            Last updated: 30 minutes ago</p>
+    </div>
+    <div class="future">
+        <p class="left-col">In the next two weeks, we're forecast to get about</p>
+        <p id="future-rain" class="dyn-important">XX</p>
+        <p class="right-col">inches of rain.</p>
+        <p class="left-col">Water conservation is currently</p>
+        <p id="importance" class="dyn-important">IMPORTANT</p>
+    </div>
+</body>
+</html>
