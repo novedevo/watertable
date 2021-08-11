@@ -11,7 +11,7 @@ def clean_and_process(stamp: str, value: str, code: str):
     if stamp[5:10] == "02-29": # janky hack, mate!
         return False # 😭
     depth = float(value)
-    if depth > 11:
+    if depth > 40:
         return False
     date = datetime.fromisoformat(stamp)
     return (
