@@ -29,3 +29,6 @@ h1 {
     grid-template-columns: 1fr min-content 1fr;
     column-gap: 10px;
 }
+img {
+    margin: auto;
+}
