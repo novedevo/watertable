@@ -48,3 +48,9 @@ def historical_past_two_weeks(years: List[List[Tuple[datetime, float]]]) -> floa
                 )
             )), 
         years))
+
+def rough_date() -> str:
+    now = datetime.now()
+    month = now.strftime("%B")
+    prefix = "Early " if now.day < 10 else "Mid-" if now.day < 20 else "Late "
+    return prefix + month
