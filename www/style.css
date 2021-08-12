@@ -1,9 +1,14 @@
+
+
 p {
-    font:500 100% system-ui, sans-serif
+    font:500 26px system-ui, sans-serif;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 h1 {
     font-family: "Lexend", system-ui, sans-serif;
     text-transform: uppercase;
+    text-align: center;
 }
 .summary {
     display: grid;
@@ -19,10 +24,12 @@ h1 {
     align-self: center;
 }
 .dyn-important {
-    font-size:x-large;
+    font-size:40px;
+    margin: auto;
 }
 #importance {
     grid-column: 2 / 4;
+    margin: 0;
 }
 .future {
     display: grid;
@@ -30,5 +37,9 @@ h1 {
     column-gap: 10px;
 }
 img {
+    margin: auto;
+    display: block;
+}
+#graph-wrapper {
     margin: auto;
 }

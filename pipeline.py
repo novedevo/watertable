@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Iterator, List, Tuple
+from statistics import mean
 import numpy as np
 
 def clean_and_process(stamp: str, value: str, code: str):
@@ -35,3 +36,15 @@ def unify_year(dates: List[Tuple[datetime, float]], year:int=2021):
 
 def rolling_mean(x, N):
     return np.convolve(x, np.ones((N,))/N)[(N-1):]
+
+def historical_past_two_weeks(years: List[List[Tuple[datetime, float]]]) -> float:
+    now = datetime.now()
+    return mean(map(
+        lambda year: mean(map(
+            lambda day: day[1], 
+            filter(
+                lambda day: abs((day[0] - now).days) < 7, 
+                np.transpose(year)
+                )
+            )), 
+        years))
