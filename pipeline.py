@@ -11,7 +11,7 @@ def clean_and_process(stamp: str, value: str, code: str):
         return False
     if stamp[5:10] == "02-29": # janky hack, mate!
         return False # 😭
-    depth = float(value)
+    depth = float(value) * 3.28 # metres to feet conversion
     if depth > 40:
         return False
     date = datetime.fromisoformat(stamp)
@@ -52,5 +52,5 @@ def historical_past_two_weeks(years: List[List[Tuple[datetime, float]]]) -> floa
 def rough_date() -> str:
     now = datetime.now()
     month = now.strftime("%B")
-    prefix = "Early " if now.day < 10 else "Mid-" if now.day < 20 else "Late "
+    prefix = "early " if now.day < 10 else "mid-" if now.day < 20 else "late "
     return prefix + month

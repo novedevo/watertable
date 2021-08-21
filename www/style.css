@@ -38,6 +38,8 @@ h1 {
 }
 img {
     margin: auto;
+    margin-top: -75;
+    margin-bottom: -75;
     display: block;
 }
 #graph-wrapper {
