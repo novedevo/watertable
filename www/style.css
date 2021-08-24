@@ -58,4 +58,10 @@ img {
     #small {
         display: block;
     }
+    p {
+        display: inline;
+    }
+    .dyn-important {
+        font-size: 26;
+    }
 }
