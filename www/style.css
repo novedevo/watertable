@@ -40,8 +40,19 @@ img {
     margin: auto;
     /* margin-top: -75; */
     /* margin-bottom: -75; */
+}
+#large {
     display: block;
 }
 #graph-wrapper {
     margin: auto;
+}
+
+@media only screen and (max-width: 500px) {
+    #large {
+        display: none;
+    }
+    #small {
+        display: block;
+    }
 }
