@@ -58,10 +58,14 @@ img {
     #small {
         display: block;
     }
+    .summary {
+        display: block;
+    }
     p {
         display: inline;
     }
     .dyn-important {
         font-size: 26;
+        padding: 2px;
     }
 }
