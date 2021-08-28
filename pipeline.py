@@ -5,7 +5,7 @@ import numpy as np
 
 def clean_and_process(stamp: str, value: str, code: str):
     try:
-        if int(code) < 0:
+        if int(code) < -1:
             return False
     except ValueError:
         return False
