@@ -11,6 +11,8 @@ def clean_and_process(stamp: str, value: str, code: str):
         return False
     if stamp[5:10] == "02-29": # janky hack, mate!
         return False # 😭
+    elif int(stamp[:4]) < 2003:
+        return False
     depth = float(value) * 3.28 # metres to feet conversion
     if depth > 40:
         return False
