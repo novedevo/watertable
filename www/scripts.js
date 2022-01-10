@@ -48,6 +48,39 @@ class GraphParser {
 
 		return yearLines;
 	}
+
+	parseGraphLines() {
+		let axes = this.graph.getElementById('axes_1');
+
+		for (let i = 0; i < this.yearLines.length; ++i) {
+			// Before the graph lines is the background for the graph and both
+			// axis rule lines
+			let axesIdx = 3 + i;
+
+			// Get the group and then the graph line
+			let graphLine = axes.children[axesIdx].children[0];
+			let graphLineColor = graphLine.style.stroke;
+
+			let foundYearLine = false;
+			for (let yearLine of this.yearLines) {
+				if (yearLine.lineColor == graphLineColor) {
+					yearLine.setGraphLine(graphLine);
+					foundYearLine = true;
+					break;
+				}
+			}
+
+			if (!foundYearLine) {
+				console.log("Failed to find yearLine for color " + graphLineColor);
+			}
+		}
+	}
+
+	unfocusAll() {
+		for (let yearLine of this.yearLines) {
+			yearLine.unfocus();
+		}
+	}
 }
 
 class YearLine {
@@ -55,5 +88,17 @@ class YearLine {
 		this.year = year;
 		this.lineColor = lineColor;
 		this.clickRect = clickRect;
+	}
+
+	setGraphLine(line) {
+		this.graphLine = line;
+	}
+
+	unfocus() {
+		this.graphLine.style.opacity = "0.1";
+	}
+
+	focus() {
+		this.graphLine.style.opacity = "1";
 	}
 }
