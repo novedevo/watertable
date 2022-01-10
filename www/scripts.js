@@ -33,13 +33,16 @@ class GraphParser {
 			// Why createElementNS? https://stackoverflow.com/a/61236874
 			let rect = this.graph.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
+			rect.year = year;
 			rect.setAttribute('x', patchBounds.x);
 			rect.setAttribute('y', patchBounds.y + (rectHeight * i));
 			rect.setAttribute('width', patchBounds.width);
 			rect.setAttribute('height', rectHeight);
 			rect.setAttribute('stroke-width', '1');
 			rect.setAttribute('stroke', 'black');
-			rect.setAttribute('fill', 'none');
+			rect.setAttribute('fill', 'transparent');
+
+			rect.onclick = this.clickCallback.bind(this);
 
 			legend.appendChild(rect);
 
@@ -76,9 +79,32 @@ class GraphParser {
 		}
 	}
 
+	clickCallback(clickEvent) {
+		this.unfocusAll();
+		this.setFocus(true, clickEvent.target.year);
+	}
+
 	unfocusAll() {
 		for (let yearLine of this.yearLines) {
 			yearLine.unfocus();
+		}
+	}
+
+	focusAll() {
+		for (let yearLine of this.yearLines) {
+			yearLine.focus();
+		}
+	}
+
+	setFocus(isFocused, year) {
+		for (let yearLine of this.yearLines) {
+			if (yearLine.year == year) {
+				if (isFocused) {
+					yearLine.focus();
+				} else {
+					yearLine.unfocus();
+				}
+			}
 		}
 	}
 }
