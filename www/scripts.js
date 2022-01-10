@@ -26,27 +26,24 @@ class GraphParser {
 			let line = legend.children[legendIdx].children[0];
 			let label = legend.children[legendIdx + 1];
 
-			// The comment with the year is positioned predictably
-			let year = label.innerHTML.trim().substr(5, 4);
-			let lineColor = line.style.stroke;
-
 			// Why createElementNS? https://stackoverflow.com/a/61236874
 			let rect = this.graph.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-			rect.year = year;
+			let yearLine = new YearLine(line, label, rect);
+
+			rect.year = yearLine.year;
 			rect.setAttribute('x', patchBounds.x);
 			rect.setAttribute('y', patchBounds.y + (rectHeight * i));
 			rect.setAttribute('width', patchBounds.width);
 			rect.setAttribute('height', rectHeight);
-			rect.setAttribute('stroke-width', '1');
-			rect.setAttribute('stroke', 'black');
+			rect.setAttribute('stroke', 'none');
 			rect.setAttribute('fill', 'transparent');
 
 			rect.onclick = this.clickCallback.bind(this);
 
 			legend.appendChild(rect);
 
-			yearLines.push(new YearLine(year, lineColor, rect));
+			yearLines.push(yearLine);
 		}
 
 		return yearLines;
@@ -110,9 +107,13 @@ class GraphParser {
 }
 
 class YearLine {
-	constructor(year, lineColor, clickRect) {
-		this.year = year;
-		this.lineColor = lineColor;
+	constructor(legendLine, legendLabel, clickRect) {
+		this.legendLine = legendLine;
+		this.legendLabel = legendLabel;
+
+		this.year = legendLabel.innerHTML.trim().substr(5, 4);
+		this.lineColor = legendLine.style.stroke;
+
 		this.clickRect = clickRect;
 	}
 
@@ -122,9 +123,13 @@ class YearLine {
 
 	unfocus() {
 		this.graphLine.style.opacity = "0.1";
+		this.legendLine.style.opacity = "0.5";
+		this.legendLabel.style.opacity = "0.5";
 	}
 
 	focus() {
 		this.graphLine.style.opacity = "1";
+		this.legendLine.style.opacity = "1";
+		this.legendLabel.style.opacity = "1";
 	}
 }
