@@ -1,7 +1,22 @@
+function largeGraphLoad() {
+	graphLoad('large');
+}
+
+function smallGraphLoad() {
+	graphLoad('small');
+}
+
+function graphLoad(graphId) {
+	// We don't actually care what happens to this. It's only acted upon by
+	// event listeners so why give it a variable?
+	new GraphParser(graphId)
+}
+
 class GraphParser {
 	constructor(graphId) {
 		this.graph = document.getElementById(graphId).contentDocument;
 		this.yearLines = this.parseLegend();
+		this.parseGraphLines();
 	}
 
 	parseLegend() {
