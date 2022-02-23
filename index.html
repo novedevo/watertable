@@ -1,14 +1,17 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watertable</title>
     <link rel='stylesheet' href='style.css'>
+    <script src="/script.js" defer></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lexend&display=swap');
-        </style> 
+    </style>
 </head>
+
 <body>
     <h1>North Pender Island Water Table</h1>
     <div class="summary">
@@ -20,8 +23,12 @@
         <p class="right-col">feet below the surface.</p>
     </div>
     <div class="graph-wrapper">
-        <img id="large" src="/output.svg" alt="A graph showing the water level for this year, and 10 years in the past">
-        <img id="small" src="/output_small.svg" alt="A graph showing the water level for this year, and 10 years in the past">
+        <object id="large" type="image/svg+xml" data="/output.svg"
+            alt="A graph showing the water level for this year, and 10 years in the past"
+            onload="largeGraphLoad()"></object>
+        <object id="small" type="image/svg+xml" data="/output_small.svg"
+            alt="A graph showing the water level for this year, and 10 years in the past"
+            onload="smallGraphLoad()"></object>
         <p style="display:none">Time range: 2010 - 2021<br>
             Smoothing: 48 hours<br>
             AI prediction: no<br>
@@ -35,4 +42,5 @@
         <p id="importance" class="dyn-important">IMPORTANT</p>
     </div>
 </body>
+
 </html>
