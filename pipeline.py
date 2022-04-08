@@ -1,7 +1,9 @@
 from datetime import datetime
-from typing import Iterator, List, Tuple
+from typing import Iterable, Iterator, List, Tuple
 from statistics import mean
 import numpy as np
+
+now = datetime.now()
 
 
 def clean_and_process(stamp: str, value: str, code: str):
@@ -43,30 +45,36 @@ def rolling_mean(x, N):
     return np.convolve(x, np.ones((N,)) / N)[(N - 1) :]
 
 
+def get_average(days: List[Tuple[datetime, float]]) -> float:
+    levels = map(lambda day: day[1], days)
+    return mean(levels)
+
+
+def trim_to_two_weeks(
+    year: Iterable[Tuple[datetime, float]]
+) -> List[Tuple[datetime, float]]:
+    ret = list(filter(lambda day: get_difference(day[0]) < 7, year))
+    return ret
+
+
+def get_difference(day: datetime) -> int:
+    ret = abs((day - now).days)
+    return ret
+
+
 def historical_past_two_weeks(years: List[List[Tuple[datetime, float]]]) -> float:
-    now = datetime.now()
-    return mean(
-        # average out all years
-        map(
-            # map each year to the average level at this time
-            lambda year: mean(
-                # take the average across all salient days
-                map(
-                    # only use the water level
-                    lambda day: day[1],
-                    # all times within 7 days in either direction of right now
-                    filter(
-                        lambda day: abs((day[0] - now).days) < 7, np.transpose(year)
-                    ),
-                )
-            ),
-            years,
-        )
-    )
+    averages = []
+    for year in years:
+        year = np.transpose(year)
+        trimmed = trim_to_two_weeks(year)
+        if len(trimmed) == 0:
+            continue
+        avg = get_average(trimmed)
+        averages.append(avg)
+    return mean(averages)
 
 
 def rough_date() -> str:
-    now = datetime.now()
     month = now.strftime("%B")
     prefix = "early " if now.day < 10 else "mid-" if now.day < 20 else "late "
     return prefix + month

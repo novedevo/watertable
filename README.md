@@ -8,5 +8,6 @@ This allows for users to clearly see how full the aquifer is, compared with earl
 
 The project is hosted by Cloudflare, and is located at [watertable.nove.dev](https://watertable.nove.dev)
 
-To view the notebook, open the `main.ipynb` document. 
+For more details, open the `main.ipynb` document. 
+The most recent code is in generate.py, and that's what's used to update the website, but the notebook has useful information.
 GitHub's Jupyter notebook rendering is a little flaky, so you may have to run it in your local installation.
