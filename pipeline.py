@@ -54,6 +54,8 @@ def trim_to_two_weeks(
     year: Iterable[Tuple[datetime, float]]
 ) -> List[Tuple[datetime, float]]:
     ret = list(filter(lambda day: get_difference(day[0]) < 7, year))
+    if len(ret) < 5:
+        ret = list(filter(lambda day: get_difference(day[0]) < 15, year))
     return ret
 
 
