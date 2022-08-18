@@ -6,21 +6,19 @@ import numpy as np
 now = datetime.now()
 
 
-def clean_and_process(stamp: str, value: str, code: str):
+def clean_and_process(stamp: str, value: str):
     try:
-        if int(code) < -1:
+        if stamp[5:10] == "02-29":  # janky hack, mate!
+            return False  # 😭
+        elif int(stamp[:4]) < 2003:
             return False
-    except ValueError:
+        depth = float(value) * 3.28  # metres to feet conversion
+        if depth > 40:
+            return False
+        date = datetime.fromisoformat(stamp)
+        return (date, -depth)
+    except:
         return False
-    if stamp[5:10] == "02-29":  # janky hack, mate!
-        return False  # 😭
-    elif int(stamp[:4]) < 2003:
-        return False
-    depth = float(value) * 3.28  # metres to feet conversion
-    if depth > 40:
-        return False
-    date = datetime.fromisoformat(stamp)
-    return (date, -depth)
 
 
 def year_splitter(
@@ -42,7 +40,7 @@ def unify_year(dates: List[Tuple[datetime, float]]):
 
 
 def rolling_mean(x, N):
-    return np.convolve(x, np.ones((N,)) / N)[(N - 1) :]
+    return np.convolve(x, np.ones((N,)) / N)[(N - 1):]
 
 
 def get_average(days: List[Tuple[datetime, float]]) -> float:

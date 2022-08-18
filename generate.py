@@ -22,12 +22,14 @@ token = rq.post(
     url="https://aqrt.nrs.gov.bc.ca/Export/DataSetToken", params=params
 ).json()["Token"]
 params["Token"] = token
-response = rq.get(url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params)
+response = rq.get(
+    url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params)
 reader = csv.reader(response.text.splitlines())
 
 
 # with open("data/dataset.csv") as data:
-parsed = filter(lambda x: x, map(lambda x: clean_and_process(x[0], x[1], x[2]), reader))
+parsed = filter(lambda x: x, map(
+    lambda x: clean_and_process(x[0], x[1]), reader))
 split = year_splitter(parsed)
 years = list(map(lambda x: np.transpose(unify_year(x)), split))
 
