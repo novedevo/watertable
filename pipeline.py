@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Iterable, Iterator, List, Tuple
 from statistics import mean
+from math import isnan
 import numpy as np
 
 now = datetime.now()
@@ -14,6 +15,8 @@ def clean_and_process(stamp: str, value: str):
             return False
         depth = float(value) * 3.28  # metres to feet conversion
         if depth > 40:
+            return False
+        if isnan(depth):
             return False
         date = datetime.fromisoformat(stamp)
         return (date, -depth)
@@ -40,7 +43,7 @@ def unify_year(dates: List[Tuple[datetime, float]]):
 
 
 def rolling_mean(x, N):
-    return np.convolve(x, np.ones((N,)) / N)[(N - 1):]
+    return np.convolve(x, np.ones((N,)) / N)[(N - 1) :]
 
 
 def get_average(days: List[Tuple[datetime, float]]) -> float:
