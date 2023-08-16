@@ -151,7 +151,7 @@ class YearLine {
 
 function updateDate() {
 	let date = new Date();
-	document.getElementById("currentDate").innerText = `${date.toLocaleDateString()}`;
+	document.getElementById("currentDate").innerText = `data updated ${date.toLocaleDateString()}`;
 }
 
 updateDate();
