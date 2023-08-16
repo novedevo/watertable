@@ -2,14 +2,15 @@ import requests as rq
 import csv
 import datetime
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import matplotlib.cm as cm
 from pipeline import *
 
 
 params = {
     "DataSet": "SGWL.Working@OW283",
+    "DateRange": "EntirePeriodOfRecord",
     # 'StartTime': "2021-01-01 00:00:00",
     "ExportFormat": "csv",
     "Compressed": "false",
@@ -46,7 +47,7 @@ ax.xaxis.set_major_locator(locator)
 ax.xaxis.set_major_formatter(formatter)
 
 # chosen for linear perception and contrast with red
-colourmap = cm.get_cmap("viridis")
+colourmap = mpl.colormaps['viridis'] # type: ignore
 
 # graphing each year with its own label and colour along the viridis colourmap
 year_plots = []
