@@ -153,3 +153,5 @@ function updateDate() {
 	let date = new Date();
 	document.getElementById("currentDate").innerText = `${date.toLocaleDateString()}`;
 }
+
+updateDate();
