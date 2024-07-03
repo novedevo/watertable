@@ -1,42 +1,24 @@
-import requests as rq
-import csv
 import datetime
 import numpy as np
+import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from pipeline import *
+from get_data import get_data
 
 
-params = {
-    "DataSet": "SGWL.Working@OW283",
-    "DateRange": "EntirePeriodOfRecord",
-    # 'StartTime': "2021-01-01 00:00:00",
-    "ExportFormat": "csv",
-    "Compressed": "false",
-    "RoundData": "False",
-    "Unit": "306",  # 228 is feet,, the API ignores this, even internally
-    "Timezone": "-7",
-}
+response = get_data()
 
-token = rq.post(
-    url="https://aqrt.nrs.gov.bc.ca/Export/DataSetToken", params=params
-).json()["Token"]
-params["Token"] = token
-
-try:
-    with open("data.csv") as data:
-        response = str(data.read())
-except:
-    response: str = rq.get(url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params).text
-    with open("data.csv", "w") as data:
-        data.write(response)
-
-reader = csv.reader(response.splitlines())
-
-
+df = pd.read_csv(
+    response,
+    header=0,
+    names=["date", "level"],
+    dtype={"date": datetime, "level": np.float64},
+)
+df.apply(lambda x: x, axis=1, result_type="expand")
 # with open("data/dataset.csv") as data:
-parsed = (x for x in (clean_and_process(row[0], row[1]) for row in reader) if x is not None)
+parsed = (x for x in (clean_and_process(row[0], row[1]) for row in df) if x is not None)
 split = year_splitter(parsed)
 years = [np.transpose(unify_year(year)) for year in split]
 
@@ -55,7 +37,7 @@ ax.xaxis.set_major_locator(locator)
 ax.xaxis.set_major_formatter(formatter)
 
 # chosen for linear perception and contrast with red
-colourmap = mpl.colormaps['viridis'] # type: ignore
+colourmap = mpl.colormaps["viridis"]  # type: ignore
 
 # graphing each year with its own label and colour along the viridis colourmap
 year_plots = []
