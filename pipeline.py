@@ -1,32 +1,33 @@
 from datetime import datetime
-from typing import Iterable, Iterator, List, Tuple
+from typing import Iterable, Iterator,Optional
 from statistics import mean
 from math import isnan
 import numpy as np
+import numpy.typing as npt
 
 now = datetime.now()
 
 
-def clean_and_process(stamp: str, value: str):
+def clean_and_process(stamp: str, value: str) -> Optional[tuple[datetime, float]]:
     try:
         if stamp[5:10] == "02-29":  # janky hack, mate!
-            return False  # 😭
+            return None  # 😭
         elif int(stamp[:4]) < 2003:
-            return False
+            return None
         depth = float(value) * 3.28  # metres to feet conversion
         if depth > 40:
-            return False
+            return None
         if isnan(depth):
-            return False
+            return None
         date = datetime.fromisoformat(stamp)
         return (date, -depth)
     except:
-        return False
+        return None
 
 
 def year_splitter(
-    days: Iterator[Tuple[datetime, float]]
-) -> List[List[Tuple[datetime, float]]]:
+    days: Iterator[tuple[datetime, float]]
+) -> list[list[tuple[datetime, float]]]:
     current_year = datetime.today().year
     years = [[] for _ in range(current_year - 2003 + 1)]
     for day in days:
@@ -34,7 +35,7 @@ def year_splitter(
     return years
 
 
-def unify_year(dates: List[Tuple[datetime, float]]):
+def unify_year(dates: list[tuple[datetime, float]]) -> list[tuple[datetime, float]]:
     year = datetime.today().year
     unified_dates = []
     for date in dates:
@@ -43,17 +44,18 @@ def unify_year(dates: List[Tuple[datetime, float]]):
 
 
 def rolling_mean(x, N):
-    return np.convolve(x, np.ones((N,)) / N)[(N - 1) :]
+    convolved = np.convolve(x, np.ones((N,)) / N)
+    return convolved[(N - 1) :]
 
 
-def get_average(days: List[Tuple[datetime, float]]) -> float:
+def get_average(days: list[tuple[datetime, float]]) -> float:
     levels = map(lambda day: day[1], days)
     return mean(levels)
 
 
 def trim_to_two_weeks(
-    year: Iterable[Tuple[datetime, float]]
-) -> List[Tuple[datetime, float]]:
+    year: Iterable[tuple[datetime, float]]
+) -> list[tuple[datetime, float]]:
     ret = list(filter(lambda day: get_difference(day[0]) < 7, year))
     if len(ret) < 5:
         ret = list(filter(lambda day: get_difference(day[0]) < 15, year))
@@ -65,7 +67,7 @@ def get_difference(day: datetime) -> int:
     return ret
 
 
-def historical_past_two_weeks(years: List[List[Tuple[datetime, float]]]) -> float:
+def historical_past_two_weeks(years: list[np.ndarray[tuple[datetime, float]]]) -> float:
     averages = []
     for year in years:
         year = np.transpose(year)

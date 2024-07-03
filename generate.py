@@ -23,14 +23,22 @@ token = rq.post(
     url="https://aqrt.nrs.gov.bc.ca/Export/DataSetToken", params=params
 ).json()["Token"]
 params["Token"] = token
-response = rq.get(url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params)
-reader = csv.reader(response.text.splitlines())
+
+try:
+    with open("data.csv") as data:
+        response = str(data.read())
+except:
+    response: str = rq.get(url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params).text
+    with open("data.csv", "w") as data:
+        data.write(response)
+
+reader = csv.reader(response.splitlines())
 
 
 # with open("data/dataset.csv") as data:
-parsed = filter(lambda x: x, map(lambda x: clean_and_process(x[0], x[1]), reader))
+parsed = (x for x in (clean_and_process(row[0], row[1]) for row in reader) if x is not None)
 split = year_splitter(parsed)
-years = list(map(lambda x: np.transpose(unify_year(x)), split))
+years = [np.transpose(unify_year(year)) for year in split]
 
 
 fig, ax = plt.subplots()
@@ -76,7 +84,8 @@ current_level = abs(years[-1][-1][-1])
 historical = abs(historical_past_two_weeks(years))
 
 with open("index.html") as index:
-    index = index.read().replace("XX", ("%2.1f" % current_level), 1)
+    index = index.read().replace("XX", str(int(datetime.now().timestamp())), 1)
+    index = index.replace("XX", ("%2.1f" % current_level), 1)
     index = index.replace("XX", ("%2.1f" % historical), 1)
     index = index.replace("this time of year", rough_date())
 with open("www/index.html", "w") as new_index:

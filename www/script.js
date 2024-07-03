@@ -150,8 +150,12 @@ class YearLine {
 }
 
 function updateDate() {
-	let date = new Date();
-	document.getElementById("currentDate").innerText = `data updated ${date.toLocaleDateString()}`;
+	const dateElem = document.getElementById("currentDate");
+	const lastUpdated = new Date(Number.parseInt(dateElem.innerText) * 1000);
+	const nextUpdated = lastUpdated + 1000 * 60 * 60 * 25;
+	const timeTillNextUpdated = nextUpdated - new Date();
+	dateElem.innerText = `data updated ${lastUpdated.toLocaleDateString()}`;
+	if (timeTillNextUpdated > 1000 * 60) {
+		setInterval(window.location.reload, timeTillNextUpdated);
+	}
 }
-
-updateDate();
