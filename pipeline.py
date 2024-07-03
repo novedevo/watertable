@@ -1,9 +1,10 @@
 from datetime import datetime
-from typing import Iterable, Iterator,Optional
+from typing import Iterable, Iterator, Optional
 from statistics import mean
 from math import isnan
 import numpy as np
 import numpy.typing as npt
+import pandas as pd
 
 now = datetime.now()
 
@@ -25,11 +26,13 @@ def clean_and_process(stamp: str, value: str) -> Optional[tuple[datetime, float]
         return None
 
 
-def year_splitter(
-    days: Iterator[tuple[datetime, float]]
-) -> list[list[tuple[datetime, float]]]:
+def year_splitter(days: Iterator[tuple[datetime, float]]) -> npt.NDArray[np.float64]:
     current_year = datetime.today().year
-    years = [[] for _ in range(current_year - 2003 + 1)]
+    years = np.empty(
+        shape=(365, current_year - 2003), dtype=[("date", "U10"), ("level", "float64")]
+    )
+
+    # years = [[] for _ in range(current_year - 2003 + 1)]
     for day in days:
         years[day[0].year - 2003].append(day)
     return years
@@ -54,7 +57,7 @@ def get_average(days: list[tuple[datetime, float]]) -> float:
 
 
 def trim_to_two_weeks(
-    year: Iterable[tuple[datetime, float]]
+    year: Iterable[tuple[datetime, float]],
 ) -> list[tuple[datetime, float]]:
     ret = list(filter(lambda day: get_difference(day[0]) < 7, year))
     if len(ret) < 5:
