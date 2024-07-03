@@ -1,5 +1,5 @@
 let
-  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-23.11";
+  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-24.05";
 
   pkgs = import nixpkgs { config = {}; overlays = []; };
 in
@@ -9,6 +9,12 @@ pkgs.mkShell {
       python-pkgs.numpy
       python-pkgs.requests
       python-pkgs.matplotlib
+      python-pkgs.pandas
+      python-pkgs.ipykernel
+      python-pkgs.pip
+      python-pkgs.jupyter
     ]))
+    pkgs.jupyter-all
+    pkgs.ruff
   ];
 }
