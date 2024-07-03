@@ -13,6 +13,7 @@ pkgs.mkShell {
       python-pkgs.ipykernel
       python-pkgs.pip
       python-pkgs.jupyter
+      python-pkgs.scipy
     ]))
     pkgs.jupyter-all
     pkgs.ruff

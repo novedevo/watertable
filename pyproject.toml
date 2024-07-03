@@ -1,2 +1,14 @@
+[project]
+name = "watertable"
+description = "Downloads, processes, and renders the aquifer level for North Pender Island."
+readme = "README.md"
+dependencies = ["requests", "pandas", "matplotlib", "numpy"]
+requires-python = ">= 3.11"
+authors = [{ name = "Devon Sawatsky", email = "devon@nove.dev" }]
+
+[project.urls]
+homepage = "https://watertable.nove.dev"
+repository = "https://github.com/novedevo/watertable.git"
+
 [tool.ruff]
 extend-include = ["*.ipynb"]
