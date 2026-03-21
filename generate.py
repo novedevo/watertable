@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
 import matplotlib.dates as mdates
+import matplotlib.ticker as ticker
 
 now = datetime.datetime.now(ZoneInfo("America/Vancouver"))
 current_year = now.year
@@ -91,6 +92,7 @@ locator = mdates.AutoDateLocator(minticks=3, maxticks=20)
 formatter = mdates.ConciseDateFormatter(locator)
 ax.xaxis.set_major_locator(locator)
 ax.xaxis.set_major_formatter(formatter)
+ax.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
 
 fig.savefig("www/output.svg")
 fig.set_size_inches(7, 5)
@@ -102,7 +104,7 @@ def rough_date() -> str:
     return prefix + month
 
 with open("index.html") as index:
-    index = index.read().replace("XX", now.strftime("%Y-%m-%d, %H:%M PT"))
+    index = index.read().replace("XX", now.strftime("%Y-%m-%d, %H:%M PT"), 1)
     index = index.replace("XX", ("%2.1f" % current_level), 1)
     index = index.replace("XX", ("%2.1f" % historical_average), 1)
     index = index.replace("this time of year", rough_date())
@@ -123,7 +125,7 @@ z
   </g>""",
             "",
         )
-        .replace('viewBox="0 0 1008 720"', 'viewBox="80 50 915 670"')
+        .replace('viewBox="0 0 1008 720"', 'viewBox="80 60 840 620"')
         .replace('height="720pt"', "")
         .replace('width="1008pt"', "")
     )
@@ -143,7 +145,7 @@ z
   </g>""",
             "",
         )
-        .replace('viewBox="0 0 504 360"', 'viewBox="15 20 490 350"')
+        .replace('viewBox="0 0 504 360"', 'viewBox="15 20 445 330"')
         .replace('height="360pt"', "")
         .replace('width="504pt"', "")
     )
