@@ -14,7 +14,7 @@
 
 <body>
     <h1>North Pender Island Water Table</h1>
-    <h2 id="currentDate" onload="updateDate()"></h2>
+    <h2 id="currentDate"">DATA UPDATED XX</h2>
     <div class="summary">
         <p class="left-col">The water level is currently</p>
         <p id="water-level" class="dyn-important">XX</p>
@@ -25,15 +25,11 @@
     </div>
     <div class="graph-wrapper">
         <object id="large" type="image/svg+xml" data="/output.svg"
-            alt="A graph showing the water level for this year, and 10 years in the past"
+            alt="A graph showing the water level for this year, and historical 90% percentile interval"
             onload="largeGraphLoad()"></object>
         <object id="small" type="image/svg+xml" data="/output_small.svg"
-            alt="A graph showing the water level for this year, and 10 years in the past"
+            alt="A graph showing the water level for this year, and historical 90% percentile interval%"
             onload="smallGraphLoad()"></object>
-        <p style="display:none">Time range: 2010 - 2021<br>
-            Smoothing: 48 hours<br>
-            AI prediction: no<br>
-            Last updated: 30 minutes ago</p>
     </div>
     <div class="future" style="display:none;">
         <p class="left-col">In the next two weeks, we're forecast to get about</p>

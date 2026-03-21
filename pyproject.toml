@@ -1,0 +1,14 @@
+[project]
+name = "watertable"
+version = "1.0.0"
+description = "friendly local water level monitoring"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.3",
+    "polars>=1.39.3",
+    "pyarrow>=23.0.1",
+    "requests>=2.32.5",
+    "seaborn>=0.13.2",
+]
