@@ -1,5 +1,3 @@
-
-
 p {
     font:500 26px system-ui, sans-serif;
     margin-top: auto;
@@ -18,14 +16,13 @@ h2 {
 .summary {
     display: grid;
     grid-template-columns: 1fr min-content 1fr;
-    column-gap:10px;
+    column-gap: 10px;
 }
 .left-col {
-    justify-self: right;
+    text-align: end;
     align-self: center;
 }
 .right-col {
-    justify-self: left;
     align-self: center;
 }
 .dyn-important {
@@ -48,9 +45,13 @@ img {
 }
 #large {
     display: block;
+    margin: auto;
+    max-height: 100vh;
 }
 #small {
     display: none;
+    margin: auto;
+    max-height: 100vh;
 }
 #graph-wrapper {
     margin: auto;

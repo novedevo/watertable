@@ -1,12 +1,13 @@
 # Watertable
 ## Analysis and visualization of an observational well on North Pender Island
 
-The well is powered by solar panels and connected over satellite, and it has a depth sensor at the base that sends measurements every hour on the hour.
+The well is solar-powered with a 4G connection; it has a depth sensor at the base that sends measurements every hour on the hour.
 It's been running since 2003.
-This project superimposes every year with data on each other, with the current year highlighted.
-This allows for users to clearly see how full the aquifer is, compared with earlier this year, natural levels, and all previous years.
+Data is sourced from the government of British Columbia's [Aquarius project](https://www2.gov.bc.ca/gov/content/environment/air-land-water/water/water-science-data/water-data-tools/real-time-water-data-reporting).
+This project graphs the current year's data, with the 95% historical range as a backdrop.
+Key numbers (current water level, historical average for this time of year) is presented in easy-to-read text.
 
-The project is hosted by Cloudflare, and is located at [watertable.nove.dev](https://watertable.nove.dev)
+The project is hosted on Cloudflare, and is located at [watertable.nove.dev](https://watertable.nove.dev)
 
 For more details, open the `main.ipynb` document. 
 The most recent code is in generate.py, and that's what's used to update the website, but the notebook has useful information.

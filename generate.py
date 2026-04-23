@@ -23,13 +23,16 @@ params = {
     "Timezone": "-7",
 }
 
+print("Getting API token...")
 token = rq.post(
     url="https://aqrt.nrs.gov.bc.ca/Export/DataSetToken", params=params
 ).json()["Token"]
 params["Token"] = token
 
+print("Downloading raw data (this may take a minute)...")
 response = rq.get(url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params)
 
+print("Data downloaded. Processing...")
 df = pl.read_csv(
     response.content,
     try_parse_dates=True,
@@ -65,6 +68,7 @@ historical_average: float = -(
 )
 current_level: float = -redline.row(-1, named=True)["level"]
 
+print("Processing complete. Generating graphs...")
 fig, ax = plt.subplots()
 fig.set_size_inches(14, 10)
 sns.lineplot(
@@ -98,10 +102,12 @@ fig.savefig("www/output.svg")
 fig.set_size_inches(7, 5)
 fig.savefig("www/output_small.svg")
 
+
 def rough_date() -> str:
     month = now.strftime("%B")
     prefix = "early " if now.day < 10 else "mid-" if now.day < 20 else "late "
     return prefix + month
+
 
 with open("index.html") as index:
     index = index.read().replace("XX", now.strftime("%Y-%m-%d, %H:%M PT"), 1)
@@ -151,3 +157,5 @@ z
     )
 with open("www/output_small.svg", "w") as new_graph:
     new_graph.write(graph)
+
+print("Graphs generated. Resulting static webpage saved to www/. Goodbye!")
