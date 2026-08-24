@@ -71,10 +71,13 @@ fig.set_size_inches(7, 5)
 fig.savefig("www/output_small.svg")
 
 current_level = abs(years[-1][-1][-1])
+latest_timestamp: str = years[-1][0][-1].strftime("%Y-%m-%d")
 historical = abs(historical_past_two_weeks(years))
 
 with open("index.html") as index:
-    index = index.read().replace("XX", ("%2.1f" % current_level), 1)
+    index = index.read()
+    index = index.replace("XX", latest_timestamp, 1)
+    index = index.replace("XX", ("%2.1f" % current_level), 1)
     index = index.replace("XX", ("%2.1f" % historical), 1)
     index = index.replace("this time of year", rough_date())
 with open("www/index.html", "w") as new_index:

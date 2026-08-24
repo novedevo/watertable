@@ -148,10 +148,3 @@ class YearLine {
 		this.legendLabel.style.opacity = "1";
 	}
 }
-
-function updateDate() {
-	let date = new Date();
-	document.getElementById("currentDate").innerText = `data updated ${date.toLocaleDateString()}`;
-}
-
-updateDate();
