@@ -19,11 +19,9 @@ params = {
     "Timezone": "-7",
 }
 
-token = rq.post(
-    url="https://aqrt.nrs.gov.bc.ca/Export/DataSetToken", params=params
-).json()["Token"]
-params["Token"] = token
-response = rq.get(url="https://aqrt.nrs.gov.bc.ca/Export/DataSet", params=params)
+response = rq.get(
+    url="https://bcmoe-prod.aquaticinformatics.net/Export/DataSet", params=params
+)
 reader = csv.reader(response.text.splitlines())
 
 
@@ -47,7 +45,7 @@ ax.xaxis.set_major_locator(locator)
 ax.xaxis.set_major_formatter(formatter)
 
 # chosen for linear perception and contrast with red
-colourmap = mpl.colormaps['viridis'] # type: ignore
+colourmap = mpl.colormaps["viridis"]  # type: ignore
 
 # graphing each year with its own label and colour along the viridis colourmap
 year_plots = []
